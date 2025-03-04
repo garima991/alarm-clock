@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  height : 100vh;
+  display: flex;
+  justify-content: center; 
+  background-color: rgb(202, 220, 235);
+  color: rgb(0, 0, 0);
+}
+
+#root{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
