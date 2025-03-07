@@ -8,8 +8,9 @@ body {
   height : 100vh;
   display: flex;
   justify-content: center; 
-  background-color: rgb(202, 220, 235);
-  color: rgb(0, 0, 0);
+  /* background: linear-gradient(to right, rgb(107, 138, 208), rgb(78, 144, 161)); */
+  background-color: rgb(14, 35, 49);
+  color: white;
 }
 
 #root{
