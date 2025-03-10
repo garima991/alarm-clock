@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createContext } from 'react';
 
 const TimerContext = createContext();
@@ -8,29 +8,13 @@ const TimerContextProvider = ({ children }) => {
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
+   
 
     useEffect(() => {
+        let timeInterval;
         if(isRunning){
-            const timeInterval = setInterval(() => {
-                if (hours === 0 && minutes === 0 && seconds === 0) {
-                    clearInterval(timeInterval);
-                    setIsRunning(false); // Stop when time is zero
-                }
-                else{
-                    if(seconds > 0){
-                        setSeconds((seconds) => seconds - 1);
-                    }
-                    else if(minutes > 0){
-                        setMinutes((minutes) => minutes - 1);
-                        setSeconds(59);
-                    }
-                    if(seconds === 0 && minutes === 0 && hours > 0){
-                        setHours((hours) => hours - 1);
-                        setMinutes(59);
-                        setSeconds(59);
-                    }
-                }
-
+            timeInterval = setInterval(() => {
+                timerFunction();
             }, 1000);
 
             return () => {
@@ -42,6 +26,50 @@ const TimerContextProvider = ({ children }) => {
             clearInterval(timeInterval);
         }
     }, [isRunning, hours, minutes, seconds]);
+
+    const timerFunction = () => {
+        let currentSecond = seconds;
+        let currentMinute = minutes;
+        let currentHour = hours;
+
+        // Normalize seconds > 60
+        if (currentSecond >= 60) {
+            currentMinute += Math.floor(currentSecond / 60);
+            currentSecond = currentSecond % 60;
+        }
+
+        // Normalize minutes > 60
+        if (currentMinute >= 60) {
+            currentHour += Math.floor(currentMinute / 60);
+            currentMinute = currentMinute % 60;
+        }
+
+        // Check if time is over and stop timer
+        if (currentHour === 0 && currentMinute === 0 && currentSecond === 0) {
+            resetTimer();
+        } 
+        else {
+           
+            if (currentSecond > 0) {
+                setSeconds(currentSecond - 1);
+            }
+            
+            else if (currentMinute > 0 && currentSecond === 0) {
+                setSeconds(59);
+                setMinutes(currentMinute - 1);
+            }
+            
+            else if (currentHour > 0 && currentMinute === 0 && currentSecond === 0) {
+                setMinutes(59);
+                setSeconds(59);
+                setHours(currentHour - 1);
+            }
+        }
+
+        if (currentSecond !== seconds) setSeconds(currentSecond < 10 ? `0${currentSecond}` : currentSecond);
+        if (currentMinute !== minutes) setMinutes(currentMinute < 10 ? `0${currentMinute}` : currentMinute);
+        if (currentHour !== hours) setHours(currentHour < 10 ? `0${currentHour}` : currentHour);
+    };
 
     const startTimer = () => {
         setIsRunning(true);

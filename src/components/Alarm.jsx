@@ -26,8 +26,8 @@ const Alarm = () => {
                 />
             </div>
 
-            <div className="flex flex-col items-center gap-3">
-                <div className="flex flex-col justify-center">
+            {/* <div className="flex flex-col items-center gap-3"> */}
+                <div className="flex flex-col flex-wrap justify-center">
                     {Object.keys(alarmDays).map((day) => (
                         <label className="text-lg" key={day}>
                             <input
@@ -39,7 +39,7 @@ const Alarm = () => {
                         </label>
                     ))}
                 </div>
-            </div>
+            {/* </div> */}
 
             {alarmTriggered && (
                 <div className="flex flex-col items-center gap-3">

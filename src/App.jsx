@@ -23,7 +23,7 @@ import { TiStopwatch } from "react-icons/ti";
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col justify-between gap-4 shadow-lg h-auto max-w-md bg-white bg-opacity-10 p-7 rounded-3xl">
+      <div className="flex flex-col justify-between gap-4 shadow-lg max-w-md bg-white bg-opacity-10 p-7 rounded-3xl">
         <Routes>
           <Route
             path="/"
